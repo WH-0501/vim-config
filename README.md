@@ -96,11 +96,13 @@ let Tlist_Exit_OnlyWindow=1  	" 若 taglist 窗口是最后一个窗口则退出
 "let Tlist_WinWidth=20  		" 设置 taglist 窗口宽度
 "let Tlist_WinHeight=20			" 设置 taglist 窗口高度
 "let Tlist_Use_Right_Window=1	" 设置 taglist 窗口显示在右侧，默认显示在左侧
+"let Tlist_Use_Horiz_Window=１	" 设置横向显示taglist窗口
 "let Tlist_Use_SingleClick=1	" 单击进入对应tag, 默认为双击进入
+"let Tlist_File_Fold_Auto_Close=１	" taglist只显示当前文件tag,其它文件的tag折叠
 
 set ut=100
 ```
-参考：<http://vim-taglist.sourceforge.net/manual.html#'Tlist_Sort_Type'> 或 在vim中输入 `:help taglist.txt`
+参考：<http://vim-taglist.sourceforge.net/manual.html#'Tlist_Sort_Type'> 或 在vim中输入 `:help taglist.txt`  
 (注意：vimrc 中使用 `"` 进行注释)  
 
 ### 3、NERDTree  
@@ -118,11 +120,22 @@ NERD_tree 配置：
 ```
 
 ```
+### cscope  
 
 ### OmniCppComplete
-自动补全插件。  
+自动补全插件。
 
+### WinManager  
+该插件为文件浏览器和窗口管理器。    
 
+### MiniBufExplorer  
+该插件提供多文件同时编辑功能。  
+
+### bufexplorer 
+该插件可以打开历史文件列表以达到快速切换文件的目的。    
+
+### lookupfile  
+不仅可以极高效率的来查找文件，还可以在打开的缓冲区中查找、按目录查找文件等。使用vim 7.0中插入模式下的下拉菜单补全功能，因此只能在vim 7.0及以上版本中使用。
 
 
 
