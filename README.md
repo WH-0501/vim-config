@@ -1,8 +1,55 @@
+sudo apt-get install vim-scripts
 
-### 1、安装 ctags  
+### 1、 ctags
+#### 1)、安装  
 ctags最先是用来生成C代码的tags文件，后来扩展成可以生成各类语言的tags。例如：Python的ptags等。  
 ctags插件用来查找函数、变量、宏、类、结构体等的定义。  
-`sudo apt-get install ctags`  
+`sudo apt-get install ctags`   
+
+查看是否安装成功：  
+```
+whereis ctags
+whatis ctags
+``` 
+
+#### 2)、常用指令  
+```
+# 查看支持的语言    
+ctags --list-launguages  
+# 查看不同语言对应的tag文件扩展名  
+ctags --list-maps  
+# 查看可以识别的语法元素  
+ctags --list-kinds  
+# 对指定的语言，使能/禁用指定的kinds  
+ctags --<LANG>-kinds=[+|-]kinds  
+# 包含指定的扩展域  
+ctags --fields=[+|-]flags  
+	flags："afmikKlnsStz"  
+		a -- 表示如果语法元素的类的成员的话，要标明其access(即是public的还是private的)      
+		i -- 表示如果有继承，标明父类；  
+		K -- 表示显示语法元素的类型的全称；  
+		S -- 表示如果是函数，标明函数的signature；  
+        z -- 表示在显示语法元素的类型是使用kind:type的格式  
+# 生成tag文件  
+ctags -R --c++-kinds=+px --fields=+iaS --extra=+q   
+    参数说明：  
+    	-R：即--recurse，递归遍历整个目录  
+    	--c++-kinds=+px：记录类型为函数声明和前向声明的语法元素  
+    	--fields=+iaS：控制记录的内容  
+    	--extra=+q：让ctags额外记录一些东西。（例如：强制ctags给类的成员函数多记一行）  
+
+```
+
+#### 3、tag 文件内容  
+不管一次扫描多少文件，一条ctags命令把记录的内容都记到一个文件里去。  
+每个语法元素对应一个tag entry，例如：
+![tag_entry](./images/tag_entry.png)
+①、第一列为tag名字，即语法元素的名字，如变量名、类名等  
+②、第二列为语法元素所在的文件名  
+③、第三列为一条“命令”。ctags所记录的内容的一个功能就是要帮助像vi这样的编辑器快速定位到语法元素所在的文件中去。前面已经记录了语法元素所在的文件，这条命令的功能就是一旦在vi中打开语法元素所在的文件，并且执行了该“命令”后，vi的光标就能定位到语法元素在文件中的具体位置。所以该“命令”的内容一般分两种，一种是一个正则表达式的搜索命令，一种是第几行的指向命令。默认让ctags在记录时自行选择命令的种类，可以通过命令行参数来强制ctags使用某种命令  
+④、最后一列为tag entry所对应的语法元素的描述，如语法元素的类型等。  
+
+
 
 ### 2、安装 Taglist  
 taglist是源码浏览器，作用类似与 sourceinsight 的 Symbol 窗口(sourceinsight将当前文件中包含的头文件、宏、变量、函数、类等显示在 Symbol 串口中)。
@@ -22,7 +69,6 @@ Taglist 依赖与 ctags 插件，因此需确保 ctags 以安装。
 ```
 # 安装 vim-addons  
 sudo apt-get install vim-addon-manager
-sudo apt-get install vim-scripts
 
 # 安装 taglist 插件  
 vim-addons install taglist

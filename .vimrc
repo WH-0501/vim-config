@@ -1,20 +1,29 @@
 syntax on		    " 语法高亮
+"colorscheme darkblue       " 更改配色方案
+"set lines=40 columns=100   " 设定窗口大小
+"set guifont=Courier_New:h10:cANSI   " 设置字体
+autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
+autocmd InsertEnter * se cul    " 用浅色高亮当前行
+
 set nu 			    " 显示行号
 "set number 
-set autoindent 		" 自动缩进
-set cindent         " 设置C/C++的自动缩进方式
-"set smartindent    " 智能自动对齐
+"set nonu
+
+"set mouse=a         " 使用鼠标
 
 " 设置缩进宽度
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab 		" 自动tab 扩展为空格
+set autoindent 		" 自动缩进
+set cindent         " 设置C/C++的自动缩进方式
+"set cinoptions={….  "设置C/C++语言的具体缩进方式
+"set smartindent    " 智能自动对齐
 
 set cino=g0,:0      " switch case 对齐风格
 
 set linebreak       " 整词换行
-"set mouse=a         " 使用鼠标
 
 " 代码折叠相关配置
 set foldenable      " 使能折叠
@@ -37,8 +46,9 @@ set showcmd         " 命令行显示输入的命令
 set showmode        " 命令行显示vim的当前模式
 
 " 状态行设置
-set laststatus=2
+set laststatus=2    " 0：不显示；1：显示；2：总是显示
 set ruler           " 使能标尺,在状态行显示光标的行号和列号
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容
 
 " ctags 设置
 " F5更新tag文件,并更新taglist
@@ -72,3 +82,48 @@ let neocomplcache_enable_at_startup = 1 " 自启动
 
 autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif  " 当只有一个窗口时自动退出vim,类似 Tlist_Exit_OnlyWindow
 
+
+
+
+
+
+
+
+
+
+
+"新建.c,.h,.sh,.java文件，自动插入文件头 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetTitle()" 
+"定义函数SetTitle，自动插入文件头 
+func SetTitle() 
+    "如果文件类型为.sh文件 
+    if &filetype == 'sh' 
+        call setline(1,"\#########################################################################") 
+        call append(line("."), "\# File Name: ".expand("%")) 
+        call append(line(".")+1, "\# Author: ") 
+        call append(line(".")+2, "\# mail: ") 
+        call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
+        call append(line(".")+4, "\#########################################################################") 
+        call append(line(".")+5, "\#!/bin/bash") 
+        call append(line(".")+6, "") 
+    else 
+        call setline(1, "/*************************************************************************") 
+        call append(line("."), "    > File Name: ".expand("%")) 
+        call append(line(".")+1, "    > Author: ") 
+        call append(line(".")+2, "    > Mail: ") 
+        call append(line(".")+3, "    > Created Time: ".strftime("%c")) 
+        call append(line(".")+4, " ************************************************************************/") 
+        call append(line(".")+5, "")
+    endif
+    if &filetype == 'cpp'
+        call append(line(".")+6, "#include<iostream>")
+        call append(line(".")+7, "using namespace std;")
+        call append(line(".")+8, "")
+    endif
+    if &filetype == 'c'
+        call append(line(".")+6, "#include<stdio.h>")
+        call append(line(".")+7, "")
+    endif
+    "新建文件后，自动定位到文件末尾
+    autocmd BufNewFile * normal G
+endfunc
