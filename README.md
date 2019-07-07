@@ -29,7 +29,7 @@ ctags --fields=[+|-]flags
 		i -- 表示如果有继承，标明父类；  
 		K -- 表示显示语法元素的类型的全称；  
 		S -- 表示如果是函数，标明函数的signature；  
-        z -- 表示在显示语法元素的类型是使用kind:type的格式  
+		z -- 表示在显示语法元素的类型是使用kind:type的格式  
 # 生成tag文件  
 ctags -R --c++-kinds=+px --fields=+iaS --extra=+q   
     参数说明：  
@@ -40,7 +40,7 @@ ctags -R --c++-kinds=+px --fields=+iaS --extra=+q
 
 ```
 
-#### 3、tag 文件内容  
+#### 3)、tag 文件内容  
 不管一次扫描多少文件，一条ctags命令把记录的内容都记到一个文件里去。  
 每个语法元素对应一个tag entry，例如：
 ![tag_entry](./images/tag_entry.png)
@@ -48,8 +48,6 @@ ctags -R --c++-kinds=+px --fields=+iaS --extra=+q
 ②、第二列为语法元素所在的文件名  
 ③、第三列为一条“命令”。ctags所记录的内容的一个功能就是要帮助像vi这样的编辑器快速定位到语法元素所在的文件中去。前面已经记录了语法元素所在的文件，这条命令的功能就是一旦在vi中打开语法元素所在的文件，并且执行了该“命令”后，vi的光标就能定位到语法元素在文件中的具体位置。所以该“命令”的内容一般分两种，一种是一个正则表达式的搜索命令，一种是第几行的指向命令。默认让ctags在记录时自行选择命令的种类，可以通过命令行参数来强制ctags使用某种命令  
 ④、最后一列为tag entry所对应的语法元素的描述，如语法元素的类型等。  
-
-
 
 ### 2、安装 Taglist  
 taglist是源码浏览器，作用类似与 sourceinsight 的 Symbol 窗口(sourceinsight将当前文件中包含的头文件、宏、变量、函数、类等显示在 Symbol 串口中)。
@@ -63,6 +61,8 @@ Taglist 依赖与 ctags 插件，因此需确保 ctags 以安装。
 （若 ~/.vim 等目录不存在，则先手动创建，也可以直接拷贝到 **/usr/share/vim/vim80/doc 及  /usr/share/vim/vim80/plugin** 目录下）  
 
 ![taglist-plugin](./images/taglist.png)  
+
+安装后，可通过在普通模式下输入`:help taglist.txt` 查看帮助文档(注意: 要想通过help taglist.txt查看，则需先执行 `:helptags ~/.vim/doc` 生成帮助标签)。  
 
 #### 2）、安装方法二  
 通过vim插件管理器 **vim-addons** 进行安装。  
@@ -86,16 +86,17 @@ vim-addons remove [plugin-name]
 ```
 #### 3）、taglist 配置  
 ```
-# 设置 Taglist 窗口快捷键为 F7. 
-map <F7> :TlistToggle<CR> # 设置普通模式下的快捷键 
-imap <F7> <ESC>:TlistToggle<CR> # 设置插入模式下的快捷键
-let Tlist_Auto_Open=1 			# 启动vim后自动打开taglist
-let Tlist_Sort_Type="name"		# taglist窗口中按名字排序，(可选：name/order)
-let Tlist_Show_One_File=1  		# 只显示当前文件的 tags
-let Tlist_Exit_OnlyWindow=1  	# 若 taglist 窗口是最后一个窗口则退出vim 
-#let Tlist_WinWidth=20  		# 设置 taglist 窗口宽度
-#let Tlist_WinHeight=20		# 设置 taglist 窗口高度
-#let Tlist_Use_Right_Window=1	# 设置 taglist 窗口显示在右侧，默认显示在左侧
+" 设置 Taglist 窗口快捷键为 F7. 
+map <F7> :TlistToggle<CR> 		" 设置普通模式下的快捷键 
+imap <F7> <ESC>:TlistToggle<CR> " 设置插入模式下的快捷键
+let Tlist_Auto_Open=1 			" 启动vim后自动打开taglist
+let Tlist_Sort_Type="name"		" taglist窗口中按名字排序，(可选：name/order)
+let Tlist_Show_One_File=1  		" 只显示当前文件的 tags
+let Tlist_Exit_OnlyWindow=1  	" 若 taglist 窗口是最后一个窗口则退出vim 
+"let Tlist_WinWidth=20  		" 设置 taglist 窗口宽度
+"let Tlist_WinHeight=20			" 设置 taglist 窗口高度
+"let Tlist_Use_Right_Window=1	" 设置 taglist 窗口显示在右侧，默认显示在左侧
+"let Tlist_Use_SingleClick=1	" 单击进入对应tag, 默认为双击进入
 
 set ut=100
 ```
